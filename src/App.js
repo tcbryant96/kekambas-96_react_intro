@@ -1,7 +1,8 @@
 
 function App() {
+    const element = <h1>Hello World - {Math.floor(Math.random()*10)}</h1>
     return (
-      <h1>Hello World</h1>
+      element
     )
 }
 
