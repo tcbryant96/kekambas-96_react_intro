@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from "./components/Button";
 import Navbar from "./components/Navbar";
 
@@ -12,8 +12,20 @@ function App(props) {
 
     // Set a state for count - initial state of 0 and setCount is function to change state value of count
     const [count, setCount] = useState(0);
-    // Set a state for names - initial state of [] and setNames is function to change state value of names
-    const [names, setNames] = useState([]);
+    // Set a state for racers - initial state of [] and setRacers is function to change state value of racers
+    const [racers, setRacers] = useState([]);
+
+    // Create an effect -> function to execute after every render
+    useEffect(() => {
+        console.log('useEffect effect callback executed.')
+        fetch('https://ergast.com/api/f1/2022/1/driverStandings.json')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                let racerStandings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+                setRacers(racerStandings);
+            })
+    }, [])
 
     // Function to be executed when a button is clicked
     function handleClick(step){
@@ -22,14 +34,10 @@ function App(props) {
     };
 
     // Function to be exectuted when the name form is submitteed
-    function handleNameClick(e){
+    function handleRacerSubmit(e){
         // Prevent default of refreshing page
         e.preventDefault();
-        // Get the value from the form
-        const name = e.target.firstName.value;
-        let newNames = [...names, name]
-        // Set the state of names to be the current state of names + the new name
-        setNames(newNames)
+        console.log(e);
     }
 
     return (
@@ -39,11 +47,11 @@ function App(props) {
                 <h1 className='text-center'>Hello World</h1>
                 <h3 className='text-center'>Total: {count}</h3>
                 {buttons.map((b, i) => <Button color={b.color} step={b.step} key={i} handleClick={handleClick} />)}
-                <form onSubmit={handleNameClick}>
-                    <input type='text' className='form-control' name='firstName' />
+                <form onSubmit={handleRacerSubmit}>
+                    <input type='text' className='form-control' name='season' />
                     <input type='submit' value='Submit' />
                 </form>
-                {names.map((n, idx) => <p key={idx}>{n}</p>)}
+                {racers.map((r, idx) => <p key={idx}>{r.points}</p>)}
             </div>
         </>
     )
