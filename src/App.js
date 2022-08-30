@@ -16,21 +16,22 @@ function App(props) {
     // Set a state for racers - initial state of [] and setRacers is function to change state value of racers
     const [racers, setRacers] = useState([]);
 
+    const [season, setSeason] = useState(2022);
+    const [round, setRound] = useState(1)
+
     // Create an effect -> function to execute after every render
     useEffect(() => {
         console.log('useEffect effect callback executed.')
-        fetch('https://ergast.com/api/f1/2022/1/driverStandings.json')
+        fetch(`https://ergast.com/api/f1/${season}/${round}/driverStandings.json`)
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 let racerStandings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
                 setRacers(racerStandings);
             })
-    }, [])
+    }, [season, round])
 
     // Function to be executed when a button is clicked
     function handleClick(step){
-        console.log('Clicked');
         setCount(count + step);
     };
 
@@ -38,7 +39,10 @@ function App(props) {
     function handleRacerSubmit(e){
         // Prevent default of refreshing page
         e.preventDefault();
-        console.log(e);
+        let newSeason = e.target.season.value;
+        let newRound = e.target.round.value;
+        setSeason(newSeason);
+        setRound(newRound);
     }
 
     return (
