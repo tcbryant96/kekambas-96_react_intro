@@ -3,16 +3,16 @@ import Button from "./Button";
 
 export default function ButtonCounter() {
     let buttons = [
-        {color: 'primary', step: 1},
-        {color: 'secondary', step: 10},
-        {color: 'success', step: 100},
-        {color: 'danger', step: 1000},
+        { color: 'primary', step: 1 },
+        { color: 'secondary', step: 10 },
+        { color: 'success', step: 100 },
+        { color: 'danger', step: 1000 },
     ]
     // Set a state for count - initial state of 0 and setCount is function to change state value of count
-    const [count, setCount] = useState(0);   
+    const [count, setCount] = useState(0);
 
     // Function to be executed when a button is clicked
-    function handleClick(step){
+    function handleClick(step) {
         setCount(count + step);
     };
     return (
