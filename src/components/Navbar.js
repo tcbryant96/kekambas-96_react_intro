@@ -34,9 +34,10 @@ export default function Navbar(props) {
                             Register
                         </Link>}
                         
+                        {localStorage.token ? null:
                         <Link className="nav-link" to="/login">
                             Login
-                        </Link>
+                        </Link>}
                         
                         {localStorage.token ? 
                         <Link className="nav-link" to="/posts">
@@ -44,6 +45,14 @@ export default function Navbar(props) {
                             Create A Post
                         </Link>:
                         null}
+                        
+                         {localStorage.token ?
+                         <Link className="nav-link" onClick={props.logout} to="/login">
+                            Logout
+                        </Link>
+                        : null}
+                        
+
                         
                     </div>
                 </div>

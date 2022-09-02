@@ -17,6 +17,8 @@ function App(props) {
     const [category, setCategory] = useState(null);
     const [loggedIn, setLoggedIn] = useState((localStorage.getItem('token') && new Date(localStorage.getItem('expiration')) > now) ? true : false)
 
+
+
     const flashMessage = (message, category) => {
         setMessage(message);
         setCategory(category)
